@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using MJV.Logics;
+using System.Reflection; 
+using MJV.Logics.Interfaces;
+using MJV.Logics.Repositorios;
+using MJV.Service;
+using MJV.Service.Interface;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace MJV.UI
-{
-    using MJV.Logic.Interfaces;
-    using MJV.Logic.Repositorios;
-    using MJV.Service;
-    using MJV.Service.Interface;
-
+{      
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -33,6 +30,14 @@ namespace MJV.UI
 
             services.AddScoped<IProductoRepository, ProductoRepository>();
             services.AddTransient<IProductoService, ProductoService>();
+
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<MJVContext>(options => 
+                    options.UseSqlServer("DefaultConnection",
+                    optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name)));
+
+            services.AddSwaggerGen(
+                c => { c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" }); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +48,10 @@ namespace MJV.UI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
             app.UseMvc();
         }
     }

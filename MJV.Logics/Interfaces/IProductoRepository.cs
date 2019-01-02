@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
-using MJV.Logic.Models;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MJV.Logics.Models;
 
-
-namespace MJV.Logic.Interfaces
-{     
+namespace MJV.Logics.Interfaces
+{
     public interface IProductoRepository
     {
         Task<IEnumerable<Producto>> TodosLosProductosAsyncTask();
@@ -12,6 +14,8 @@ namespace MJV.Logic.Interfaces
         Task<Producto> ProductoAsyncTask(int productoID);
 
         Task<IEnumerable<Producto>> BuscarProductosAsyncTask(string textoBuscar);
+
+        Task<Producto> SetProductoAsyncTask(Producto producto);
 
         Task<Producto> EliminarProductoAsyncTask(int prodctoID);
     }

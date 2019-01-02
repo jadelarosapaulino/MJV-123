@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MJV.Service.ViewModel
+namespace MJV.Logics.Models
 {
-    public class ProductoViewModel
+    public class Producto
     {
         public int? productoID { get; set; }
         public string productoNombre { get; set; }

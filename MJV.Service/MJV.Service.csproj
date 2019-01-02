@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MJV.Logic\MJV.Logic.csproj" />
+    <ProjectReference Include="..\MJV.Logics\MJV.Logics.csproj" />
   </ItemGroup>
 
 </Project>

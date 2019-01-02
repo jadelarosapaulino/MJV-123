@@ -1,16 +1,15 @@
-﻿namespace MJV.Service
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Mvc;
-    using MJV.Logic.Interfaces;
-    using MJV.Logic.Models;
-    using MJV.Service.Interface;
-    using MJV.Service.ViewModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using MJV.Logics.Interfaces;
+using MJV.Logics.Models;
+using MJV.Service.Interface;
+using MJV.Service.ViewModel;
 
+namespace MJV.Service
+{
     public class ProductoService : IProductoService
     {
         private readonly IProductoRepository _productoRepository;
@@ -50,6 +49,31 @@
             catch
             {
                 return new ConflictResult();
+            }
+        }
+
+
+        public async Task<IActionResult> SetProductoAsyncTask(Producto producto)
+        {
+            try
+            {
+                Producto productos = await _productoRepository.SetProductoAsyncTask(producto);
+
+                return new OkObjectResult(new ProductoViewModel()
+                {
+                    productoID = productos.productoID,
+                    productoNombre = productos.productoNombre,
+                    precio_compra = productos.precio_compra,
+                    precio_venta = productos.precio_venta,
+                    marcaID = productos.marcaID,
+                    categoriaID = productos.categoriaID,
+                    estado = productos.estado,
+                    activo = productos.activo
+                });
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
@@ -125,6 +149,8 @@
                 return new ConflictResult();
             }
         }
+
+
 
         // Eliminar Producto por productoID
         public async Task<IActionResult> EliminarProductoAsyncTask(int productoID)
