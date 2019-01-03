@@ -4,17 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace MJV.Service.Interface
 {
     using MJV.Logics.Models;
+    using MJV.Service.ViewModel;
 
     public interface IProductoService
     {
-        Task<IActionResult> TodosLosProductosAsyncTask();
+        Task<IActionResult> GetAll();
 
-        Task<IActionResult> ProductoAsyncTask(int productoID);
+        Task<IActionResult> ProductoByID(int productoID);
 
-        Task<IActionResult> SetProductoAsyncTask(Producto producto);
+        void SetProducto(ProductoViewModel producto);
 
-        Task<IActionResult> BuscarProductosAsyncTaskAsync(string textoBuscar);
+        Task<IActionResult> BuscarProductos(string textoBuscar);
 
-        Task<IActionResult> EliminarProductoAsyncTask(int prodctoID);
+        Task<IActionResult> EliminarProducto(int prodctoID);
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace MJV.Logics.Models
+namespace MJV.Service
 {
-    public class Producto
+    public abstract class EntityBase
     {
-        public int? productoID { get; set; }
+        public int ProductoID { get; set; }
         public string productoNombre { get; set; }
         public decimal precio_compra { get; set; }
         public decimal precio_venta { get; set; }
@@ -15,6 +17,7 @@ namespace MJV.Logics.Models
         public string categoria_nombre { get; set; }
         public string estado { get; set; }
         public char activo { get; set; }
+        public DateTime fecha_ingreso { get; set; }
         public DateTime ultima_actualizacion { get; set; }
     }
 }

@@ -1,8 +1,12 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MJV.UI.Controllers
 {
+    using System.Net;
+
+    using MJV.Service;
     using MJV.Service.Interface;
     using MJV.Service.ViewModel;
 
@@ -21,7 +25,7 @@ namespace MJV.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return await this.productoService.TodosLosProductosAsyncTask();
+            return await this.productoService.GetAll();
         }
 
         //// GET: api/Productos/5
@@ -35,22 +39,25 @@ namespace MJV.UI.Controllers
         [HttpGet("{textoBuscar}", Name = "Get")]
         public async Task<IActionResult> BuscarProductos(string textoBuscar)
         {
-            if (textoBuscar != null) ;
+            if (textoBuscar != null);
 
-            return await this.productoService.BuscarProductosAsyncTaskAsync(textoBuscar);
+            return await this.productoService.BuscarProductos(textoBuscar);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SetProducto(ProductoViewModel producto)
+        public IActionResult SetProducto([FromRoute]ProductoViewModel producto)
         {
-            return await this.productoService.SetProductoAsyncTask(producto);
+            productoService.SetProducto(producto);
+
+            return Ok();
         }
 
         // DELETE: api/Productos/d/1
         [HttpDelete]
+        [Route("api/Productos/d/")]
         public async Task<IActionResult> BorrarProducto(int id)
         {
-            return await this.productoService.EliminarProductoAsyncTask(id);
+            return await this.productoService.EliminarProducto(id);
         }
     }
 }

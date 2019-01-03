@@ -9,14 +9,14 @@ namespace MJV.Logics.Interfaces
 {
     public interface IProductoRepository
     {
-        Task<IEnumerable<Producto>> TodosLosProductosAsyncTask();
+        Task<IEnumerable<Producto>> GetAll();
 
-        Task<Producto> ProductoAsyncTask(int productoID);
+        Task<Producto> ProductoByID(int productoID);
 
-        Task<IEnumerable<Producto>> BuscarProductosAsyncTask(string textoBuscar);
+        Task<IEnumerable<Producto>> BuscarProductos(string textoBuscar);
 
-        Task<Producto> SetProductoAsyncTask(Producto producto);
+        Task<Producto> SetProducto(Producto producto);
 
-        Task<Producto> EliminarProductoAsyncTask(int prodctoID);
+        Task<Producto> EliminarProducto(int prodctoID);
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MJV.Logics.Interfaces;
 using MJV.Logics.Models;
+using MJV.Logics.Repositorios;
 using MJV.Service.Interface;
 using MJV.Service.ViewModel;
 
@@ -18,13 +19,13 @@ namespace MJV.Service
         {
             _productoRepository = productsRepository;
         }
-
+  
         // Traer todos los productos
-        public async Task<IActionResult> TodosLosProductosAsyncTask()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                IEnumerable<Producto> productos = await _productoRepository.TodosLosProductosAsyncTask();
+                IEnumerable<Producto> productos = await _productoRepository.GetAll();
 
                 if (productos != null)
                 {
@@ -52,24 +53,24 @@ namespace MJV.Service
             }
         }
 
-
-        public async Task<IActionResult> SetProductoAsyncTask(Producto producto)
+        // Crear nuevo producto
+        public void SetProducto(ProductoViewModel prod)
         {
             try
             {
-                Producto productos = await _productoRepository.SetProductoAsyncTask(producto);
-
-                return new OkObjectResult(new ProductoViewModel()
+                var producto = (new Producto()
                 {
-                    productoID = productos.productoID,
-                    productoNombre = productos.productoNombre,
-                    precio_compra = productos.precio_compra,
-                    precio_venta = productos.precio_venta,
-                    marcaID = productos.marcaID,
-                    categoriaID = productos.categoriaID,
-                    estado = productos.estado,
-                    activo = productos.activo
+                    productoID = prod.productoID,
+                    productoNombre = prod.productoNombre,
+                    precio_compra = prod.precio_compra,
+                    precio_venta = prod.precio_venta,
+                    marcaID = prod.marcaID,
+                    categoriaID = prod.categoriaID,
+                    estadoID = prod.estadoID
                 });
+
+
+                _productoRepository.SetProducto(producto);
             }
             catch (Exception e)
             {
@@ -78,11 +79,11 @@ namespace MJV.Service
         }
 
         // Buscar un producto especifico
-        public async Task<IActionResult> ProductoAsyncTask(int productoID)
+        public async Task<IActionResult> ProductoByID(int productoID)
         {
             try
             {
-                Producto productos = await _productoRepository.ProductoAsyncTask(productoID);
+                Producto productos = await _productoRepository.ProductoByID(productoID);
 
                 if (productos != null)
                 {
@@ -111,11 +112,11 @@ namespace MJV.Service
         }
 
         // Buscar por criterio de busqueda
-        public async Task<IActionResult> BuscarProductosAsyncTaskAsync(string textoBuscar)
+        public async Task<IActionResult> BuscarProductos(string textoBuscar)
         {
             try
             {
-                IEnumerable<Producto> productos = await _productoRepository.BuscarProductosAsyncTask(textoBuscar);
+                IEnumerable<Producto> productos = await _productoRepository.BuscarProductos(textoBuscar);
 
                 if (productos != null)
                 {
@@ -153,11 +154,11 @@ namespace MJV.Service
 
 
         // Eliminar Producto por productoID
-        public async Task<IActionResult> EliminarProductoAsyncTask(int productoID)
+        public async Task<IActionResult> EliminarProducto(int productoID)
         {
             try
             {
-                Producto productos = await _productoRepository.EliminarProductoAsyncTask(productoID);
+                Producto productos = await _productoRepository.EliminarProducto(productoID);
 
                 if (productos != null)
                 {

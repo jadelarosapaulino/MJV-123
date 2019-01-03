@@ -128,6 +128,10 @@
     <Compile Include="Migrations\20190102185104_Producto.designer.cs">
       <DependentUpon>20190102185104_Producto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190103185421_Productospljlkj.cs" />
+    <Compile Include="Migrations\20190103185421_Productospljlkj.designer.cs">
+      <DependentUpon>20190103185421_Productospljlkj.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MJVContextModelSnapshot.cs" />
     <Compile Include="MJVContext.cs" />
     <Compile Include="Models\Producto.cs" />
